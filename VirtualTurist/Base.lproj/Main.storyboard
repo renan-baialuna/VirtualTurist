@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -48,18 +49,70 @@
                                     <constraint firstAttribute="height" constant="150" id="uyA-te-Tp9"/>
                                 </constraints>
                             </mapView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KBy-5y-lAA">
+                                <rect key="frame" x="0.0" y="238" width="414" height="573"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2oh-W9-aLw">
+                                    <size key="itemSize" width="175" height="287"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="Yoo-Tb-DVk" customClass="PhotoCollectionViewCell" customModule="VirtualTurist" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="175" height="287"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="EaW-fR-0eO">
+                                            <rect key="frame" x="0.0" y="0.0" width="175" height="287"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="VirtualTurist" translatesAutoresizingMaskIntoConstraints="NO" id="Zmy-gd-n7r">
+                                                    <rect key="frame" x="5" y="5" width="165" height="277"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="Zmy-gd-n7r" secondAttribute="bottom" constant="5" id="2Hj-vf-vSE"/>
+                                                <constraint firstItem="Zmy-gd-n7r" firstAttribute="leading" secondItem="EaW-fR-0eO" secondAttribute="leading" constant="5" id="3aL-48-hWI"/>
+                                                <constraint firstAttribute="trailing" secondItem="Zmy-gd-n7r" secondAttribute="trailing" constant="5" id="AfA-OG-jgM"/>
+                                                <constraint firstItem="Zmy-gd-n7r" firstAttribute="top" secondItem="EaW-fR-0eO" secondAttribute="top" constant="5" id="SUa-bH-UVk"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="175" height="287"/>
+                                        <connections>
+                                            <outlet property="image" destination="Zmy-gd-n7r" id="c5W-Tp-b8E"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ITt-dj-x4B">
+                                <rect key="frame" x="0.0" y="811" width="414" height="85"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="85" id="BjO-sq-Pxd"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="VrJ-vW-RNf"/>
-                        <color key="backgroundColor" systemColor="systemGreenColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="KBy-5y-lAA" firstAttribute="top" secondItem="2wH-4O-mpG" secondAttribute="bottom" id="4nL-v8-zjf"/>
+                            <constraint firstItem="ITt-dj-x4B" firstAttribute="trailing" secondItem="VrJ-vW-RNf" secondAttribute="trailing" id="A6J-Sy-bND"/>
                             <constraint firstItem="2wH-4O-mpG" firstAttribute="top" secondItem="VrJ-vW-RNf" secondAttribute="top" id="HSo-im-6Il"/>
+                            <constraint firstItem="ITt-dj-x4B" firstAttribute="leading" secondItem="VrJ-vW-RNf" secondAttribute="leading" id="KH2-kg-Gtn"/>
                             <constraint firstItem="2wH-4O-mpG" firstAttribute="leading" secondItem="VrJ-vW-RNf" secondAttribute="leading" id="NE0-4x-o3a"/>
+                            <constraint firstAttribute="bottom" secondItem="ITt-dj-x4B" secondAttribute="bottom" id="WHU-rD-OvG"/>
                             <constraint firstItem="2wH-4O-mpG" firstAttribute="trailing" secondItem="VrJ-vW-RNf" secondAttribute="trailing" id="Wb0-e0-l2b"/>
+                            <constraint firstItem="ITt-dj-x4B" firstAttribute="top" secondItem="KBy-5y-lAA" secondAttribute="bottom" id="aFw-Xv-K0O"/>
+                            <constraint firstItem="KBy-5y-lAA" firstAttribute="leading" secondItem="VrJ-vW-RNf" secondAttribute="leading" id="fED-PC-NwU"/>
+                            <constraint firstItem="KBy-5y-lAA" firstAttribute="trailing" secondItem="VrJ-vW-RNf" secondAttribute="trailing" id="pRn-WS-7Pq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="6l2-It-kOX"/>
                     <connections>
                         <outlet property="mapView" destination="2wH-4O-mpG" id="gMX-Pp-gxC"/>
+                        <outlet property="photosCollection" destination="KBy-5y-lAA" id="4LN-Le-cfd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zf2-Ld-uv4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -86,11 +139,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="VirtualTurist" width="1024" height="1024"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

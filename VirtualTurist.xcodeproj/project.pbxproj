@@ -17,6 +17,7 @@
 		8073EA49266DB02200A0A0B0 /* VirtualTuristTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073EA48266DB02200A0A0B0 /* VirtualTuristTests.swift */; };
 		8073EA54266DB02200A0A0B0 /* VirtualTuristUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073EA53266DB02200A0A0B0 /* VirtualTuristUITests.swift */; };
 		8073EA772670558000A0A0B0 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073EA762670558000A0A0B0 /* LocationViewController.swift */; };
+		8073EA7C2672B4F500A0A0B0 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073EA7B2672B4F500A0A0B0 /* PhotoCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		8073EA53266DB02200A0A0B0 /* VirtualTuristUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualTuristUITests.swift; sourceTree = "<group>"; };
 		8073EA55266DB02200A0A0B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8073EA762670558000A0A0B0 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		8073EA7B2672B4F500A0A0B0 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 			children = (
 				8073EA32266DB01800A0A0B0 /* MapViewController.swift */,
 				8073EA762670558000A0A0B0 /* LocationViewController.swift */,
+				8073EA7B2672B4F500A0A0B0 /* PhotoCollectionViewCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 				8073EA33266DB01800A0A0B0 /* MapViewController.swift in Sources */,
 				8073EA2F266DB01800A0A0B0 /* AppDelegate.swift in Sources */,
 				8073EA31266DB01800A0A0B0 /* SceneDelegate.swift in Sources */,
+				8073EA7C2672B4F500A0A0B0 /* PhotoCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
