@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8016F15A267842FA00EA0B2F /* PhotoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8016F159267842FA00EA0B2F /* PhotoList.swift */; };
 		8073EA2F266DB01800A0A0B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073EA2E266DB01800A0A0B0 /* AppDelegate.swift */; };
 		8073EA31266DB01800A0A0B0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073EA30266DB01800A0A0B0 /* SceneDelegate.swift */; };
 		8073EA33266DB01800A0A0B0 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073EA32266DB01800A0A0B0 /* MapViewController.swift */; };
@@ -18,6 +19,7 @@
 		8073EA54266DB02200A0A0B0 /* VirtualTuristUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073EA53266DB02200A0A0B0 /* VirtualTuristUITests.swift */; };
 		8073EA772670558000A0A0B0 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073EA762670558000A0A0B0 /* LocationViewController.swift */; };
 		8073EA7C2672B4F500A0A0B0 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073EA7B2672B4F500A0A0B0 /* PhotoCollectionViewCell.swift */; };
+		80EF8E732672FD0700B3830D /* OTMClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EF8E722672FD0700B3830D /* OTMClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8016F159267842FA00EA0B2F /* PhotoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoList.swift; sourceTree = "<group>"; };
 		8073EA2B266DB01800A0A0B0 /* VirtualTurist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualTurist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8073EA2E266DB01800A0A0B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8073EA30266DB01800A0A0B0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +58,7 @@
 		8073EA55266DB02200A0A0B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8073EA762670558000A0A0B0 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		8073EA7B2672B4F500A0A0B0 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		80EF8E722672FD0700B3830D /* OTMClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTMClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +86,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8016F1582678426C00EA0B2F /* OTM Response */ = {
+			isa = PBXGroup;
+			children = (
+				8016F159267842FA00EA0B2F /* PhotoList.swift */,
+			);
+			path = "OTM Response";
+			sourceTree = "<group>";
+		};
 		8073EA22266DB01800A0A0B0 = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +117,8 @@
 		8073EA2D266DB01800A0A0B0 /* VirtualTurist */ = {
 			isa = PBXGroup;
 			children = (
+				8016F1582678426C00EA0B2F /* OTM Response */,
+				80EF8E712672FCEE00B3830D /* Models */,
 				8073EA752670556700A0A0B0 /* Controller */,
 				8073EA2E266DB01800A0A0B0 /* AppDelegate.swift */,
 				8073EA30266DB01800A0A0B0 /* SceneDelegate.swift */,
@@ -143,6 +157,14 @@
 				8073EA7B2672B4F500A0A0B0 /* PhotoCollectionViewCell.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		80EF8E712672FCEE00B3830D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				80EF8E722672FD0700B3830D /* OTMClient.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,10 +297,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8016F15A267842FA00EA0B2F /* PhotoList.swift in Sources */,
 				8073EA772670558000A0A0B0 /* LocationViewController.swift in Sources */,
 				8073EA39266DB01800A0A0B0 /* VirtualTurist.xcdatamodeld in Sources */,
 				8073EA33266DB01800A0A0B0 /* MapViewController.swift in Sources */,
 				8073EA2F266DB01800A0A0B0 /* AppDelegate.swift in Sources */,
+				80EF8E732672FD0700B3830D /* OTMClient.swift in Sources */,
 				8073EA31266DB01800A0A0B0 /* SceneDelegate.swift in Sources */,
 				8073EA7C2672B4F500A0A0B0 /* PhotoCollectionViewCell.swift in Sources */,
 			);
