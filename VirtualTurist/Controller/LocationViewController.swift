@@ -20,7 +20,9 @@ class LocationViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     var location: MKPointAnnotation!
     var photos: [PhotoStruct] = []
-    
+//    
+//    var loc: InternalLocation!
+//    
     var tempImage: UIImage?
     
     override func viewDidLoad() {

@@ -19,6 +19,7 @@
 		8073EA54266DB02200A0A0B0 /* VirtualTuristUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073EA53266DB02200A0A0B0 /* VirtualTuristUITests.swift */; };
 		8073EA772670558000A0A0B0 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073EA762670558000A0A0B0 /* LocationViewController.swift */; };
 		8073EA7C2672B4F500A0A0B0 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073EA7B2672B4F500A0A0B0 /* PhotoCollectionViewCell.swift */; };
+		808097CA268C046400C82C13 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808097C9268C046400C82C13 /* DataController.swift */; };
 		80EF8E732672FD0700B3830D /* OTMClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EF8E722672FD0700B3830D /* OTMClient.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		8073EA55266DB02200A0A0B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8073EA762670558000A0A0B0 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		8073EA7B2672B4F500A0A0B0 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		808097C9268C046400C82C13 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		80EF8E722672FD0700B3830D /* OTMClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTMClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,6 +154,7 @@
 		8073EA752670556700A0A0B0 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				808097C9268C046400C82C13 /* DataController.swift */,
 				8073EA32266DB01800A0A0B0 /* MapViewController.swift */,
 				8073EA762670558000A0A0B0 /* LocationViewController.swift */,
 				8073EA7B2672B4F500A0A0B0 /* PhotoCollectionViewCell.swift */,
@@ -301,6 +304,7 @@
 				8073EA772670558000A0A0B0 /* LocationViewController.swift in Sources */,
 				8073EA39266DB01800A0A0B0 /* VirtualTurist.xcdatamodeld in Sources */,
 				8073EA33266DB01800A0A0B0 /* MapViewController.swift in Sources */,
+				808097CA268C046400C82C13 /* DataController.swift in Sources */,
 				8073EA2F266DB01800A0A0B0 /* AppDelegate.swift in Sources */,
 				80EF8E732672FD0700B3830D /* OTMClient.swift in Sources */,
 				8073EA31266DB01800A0A0B0 /* SceneDelegate.swift in Sources */,
