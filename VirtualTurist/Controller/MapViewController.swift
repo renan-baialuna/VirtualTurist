@@ -20,17 +20,22 @@ class MapViewController: UIViewController {
     var dataController: DataController!
     var locations: [InternalLocation] = []
     
+    let centerLatKey = "centerLat"
+    let centerLonKey = "centerLog"
+    let spanLatKey = "spanLat"
+    let spanLogKey = "spanLog"
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setMap()
         mapView.delegate = self
         
         let fetchRequest: NSFetchRequest<InternalLocation> = InternalLocation.fetchRequest()
-//        let sortDescriptor = NSSortDescriptor(key: "", ascending: <#T##Bool#>)
-//        fetchRequest.sortDescriptors = []
         if let results = try? dataController.viewContext.fetch(fetchRequest) {
             locations = results
         }
+        getUserDefault()
         
     }
     
@@ -42,6 +47,45 @@ class MapViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+        
+        let currentLoc = mapView.centerCoordinate
+        UserDefaults.standard.setValue(mapView.region.span.latitudeDelta, forKey: spanLatKey)
+        UserDefaults.standard.setValue(mapView.region.span.longitudeDelta, forKey: spanLogKey)
+        UserDefaults.standard.setValue(currentLoc.latitude, forKey: centerLatKey)
+        UserDefaults.standard.setValue(currentLoc.longitude, forKey: centerLonKey)
+    }
+    
+    func getUserDefault() {
+        var loc = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
+        var span = MKCoordinateSpan()
+        
+        if let latSpan = UserDefaults.standard.value(forKey: spanLatKey) {
+//            mapView.region.span.latitudeDelta = latSpan as! CLLocationDegrees
+            span.latitudeDelta = latSpan as! CLLocationDegrees
+        } else {
+            UserDefaults.standard.setValue(mapView.region.span.latitudeDelta, forKey: spanLatKey)
+        }
+        
+        if let lonSpan = UserDefaults.standard.value(forKey: spanLogKey) {
+//            mapView.region.span.longitudeDelta = lonSpan as! CLLocationDegrees
+            span.longitudeDelta = lonSpan as! CLLocationDegrees
+        } else {
+            UserDefaults.standard.setValue(mapView.region.span.longitudeDelta, forKey: spanLogKey)
+        }
+        
+        if let latCenter = UserDefaults.standard.value(forKey: centerLatKey) {
+            loc.latitude = latCenter as! CLLocationDegrees
+        } else {
+            UserDefaults.standard.setValue(mapView.region.span.latitudeDelta, forKey: centerLatKey)
+        }
+        
+        if let logCenter = UserDefaults.standard.value(forKey: centerLonKey) {
+            loc.longitude = logCenter as! CLLocationDegrees
+        } else {
+            UserDefaults.standard.setValue(mapView.region.span.latitudeDelta, forKey: centerLonKey)
+        }
+        
+        mapView.setRegion(MKCoordinateRegion(center: loc, span: span), animated: false)
     }
     
     func convertLocation(location: InternalLocation) -> MKPointAnnotation {
@@ -82,7 +126,7 @@ extension MapViewController: MKMapViewDelegate {
         var internalLocation = InternalLocation(context: dataController.viewContext)
         internalLocation.latitude = Float(coordinate.latitude)
         internalLocation.longitude = Float(coordinate.longitude)
-        try? dataController.viewContext.save()
+//        try? dataController.viewContext.save()
         
     }
     
@@ -95,7 +139,7 @@ extension MapViewController: MKMapViewDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == segueId {
             var controller = segue.destination as! LocationViewController
-//            controller.location = locationChosen!
+            controller.location = locationChosen!
         }
     }
 }

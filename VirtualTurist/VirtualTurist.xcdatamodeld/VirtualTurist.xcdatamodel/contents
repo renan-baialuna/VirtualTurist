@@ -7,11 +7,11 @@
     </entity>
     <entity name="InternalPhoto" representedClassName="InternalPhoto" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="image" optional="YES" attributeType="Transformable"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
         <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="InternalLocation" inverseName="photos" inverseEntity="InternalLocation"/>
     </entity>
     <elements>
-        <element name="InternalPhoto" positionX="27.44903564453125" positionY="3.819091796875" width="108.0103759765625" height="88"/>
         <element name="InternalLocation" positionX="-246.89501953125" positionY="-25.83099365234375" width="128" height="74"/>
+        <element name="InternalPhoto" positionX="27.44903564453125" positionY="3.819091796875" width="108.0103759765625" height="74"/>
     </elements>
 </model>
