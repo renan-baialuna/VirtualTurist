@@ -19,6 +19,7 @@ class MapViewController: UIViewController {
     var locationChosen: MKPointAnnotation?
     var dataController: DataController!
     var locations: [InternalLocation] = []
+    var nextLocation :InternalLocation? = nil
     
     let centerLatKey = "centerLat"
     let centerLonKey = "centerLog"
@@ -35,6 +36,7 @@ class MapViewController: UIViewController {
         if let results = try? dataController.viewContext.fetch(fetchRequest) {
             locations = results
         }
+        setMap()
         getUserDefault()
         
     }
@@ -108,6 +110,7 @@ class MapViewController: UIViewController {
             let anotation = convertLocation(location: i)
             annotations.append(anotation)
         }
+        self.mapView.addAnnotations(annotations)
     }
 }
 
@@ -124,22 +127,38 @@ extension MapViewController: MKMapViewDelegate {
         
 //        save location
         var internalLocation = InternalLocation(context: dataController.viewContext)
-        internalLocation.latitude = Float(coordinate.latitude)
-        internalLocation.longitude = Float(coordinate.longitude)
-//        try? dataController.viewContext.save()
+        internalLocation.latitude = coordinate.latitude
+        internalLocation.longitude = coordinate.longitude
+        try? dataController.viewContext.save()
+        
         
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         let location = view.annotation as? MKPointAnnotation
         self.locationChosen = location
-        performSegue(withIdentifier: segueId, sender: self)
+        if let loc = searchInternalLocation(lat: (self.locationChosen?.coordinate.latitude)!, lon: (self.locationChosen?.coordinate.longitude)!) {
+            self.nextLocation = loc
+            performSegue(withIdentifier: segueId, sender: self)
+        }
+        
+    }
+    
+    func searchInternalLocation(lat: Double, lon: Double) -> InternalLocation? {
+        for i in self.locations {
+            if  i.latitude == lat && i.longitude == lon {
+                return i
+            }
+        }
+        return nil
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == segueId {
             var controller = segue.destination as! LocationViewController
             controller.location = locationChosen!
+            controller.dataController = dataController
+            controller.internalLocation = nextLocation
         }
     }
 }

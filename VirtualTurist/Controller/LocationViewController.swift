@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 
 struct PhotoStruct {
@@ -19,10 +20,14 @@ class LocationViewController: UIViewController {
     @IBOutlet weak var photosCollection: UICollectionView!
     @IBOutlet weak var mapView: MKMapView!
     var location: MKPointAnnotation!
+    var dataController: DataController!
+    var internalLocation: InternalLocation!
     var photos: [PhotoStruct] = []
 
-    var loc: InternalLocation!
-
+    
+    
+    
+    var internalPhotos: [InternalPhoto] = []
     var tempImage: UIImage?
     
     override func viewDidLoad() {
@@ -31,13 +36,28 @@ class LocationViewController: UIViewController {
         photosCollection.delegate = self
         photosCollection.dataSource = self
         
+        let fetchRequest: NSFetchRequest<InternalPhoto> = InternalPhoto.fetchRequest()
+        let predicate  = NSPredicate(format: "location == %@", internalLocation)
+        fetchRequest.predicate = predicate
+        
+        if let result = try? dataController.viewContext.fetch(fetchRequest) {
+            self.internalPhotos = result
+            getInternalPhotos()
+        } else {
+            getUserLocation(lat: Float(location.coordinate.latitude), log: Float(location.coordinate.longitude))
+        }
         
         
-        
-        print("lat \(location.coordinate.latitude)")
-        print("lon \(location.coordinate.longitude)")
-        
-        getUserLocation(lat: Float(location.coordinate.latitude), log: Float(location.coordinate.longitude))
+    }
+    
+    func getInternalPhotos() {
+        for i in self.internalPhotos {
+            let newPhoto = PhotoStruct(id: i.id!, image: UIImage(data: i.image!))
+            self.photos.append(newPhoto)
+        }
+        DispatchQueue.main.async {
+            self.photosCollection.reloadData()
+        }
     }
     
     func getUserLocation(lat: Float, log: Float) {
@@ -72,7 +92,6 @@ class LocationViewController: UIViewController {
                     self.getPhoto(id: id, urlString: ret.source)
                 }
                 
-//                print(response?.sizes.size[0].url)
             } else {
 //
             }
@@ -132,6 +151,17 @@ extension LocationViewController: UICollectionViewDelegate, UICollectionViewData
         let dimensions = (UIScreen.main.bounds.width / 2) - 5
         return CGSize(width: dimensions, height: dimensions)
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        var internalPhoto = InternalPhoto(context: dataController.viewContext)
+        let cell = photos[indexPath.row]
+        internalPhoto.id = cell.id
+        internalPhoto.image = cell.image?.pngData()
+        internalPhoto.location = internalLocation
+        
+        
+        try? dataController.viewContext.save()
     }
     
 }

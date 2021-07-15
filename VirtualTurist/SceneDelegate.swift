@@ -18,8 +18,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         let nevigationController = window?.rootViewController as! UINavigationController
         let mapViewController = nevigationController.topViewController as! MapViewController
-        mapViewController.dataController = dataController
+        dataController.load {
+            
+        }
         
+        
+        mapViewController.dataController = dataController
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 
