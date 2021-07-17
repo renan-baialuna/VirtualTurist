@@ -41,7 +41,14 @@ class LocationViewController: UIViewController {
         fetchRequest.predicate = predicate
         
         if let result = try? dataController.viewContext.fetch(fetchRequest) {
-            self.internalPhotos = result
+            
+            if result.count > 0 {
+                self.internalPhotos = result
+            } else {
+                getUserLocation(lat: Float(location.coordinate.latitude), log: Float(location.coordinate.longitude))
+            }
+            
+            
             getInternalPhotos()
         } else {
             getUserLocation(lat: Float(location.coordinate.latitude), log: Float(location.coordinate.longitude))

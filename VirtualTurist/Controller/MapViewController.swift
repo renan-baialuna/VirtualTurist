@@ -32,13 +32,18 @@ class MapViewController: UIViewController {
         self.setMap()
         mapView.delegate = self
         
+        
+        refreshLocations()
+        setMap()
+        getUserDefault()
+        
+    }
+    
+    func refreshLocations() {
         let fetchRequest: NSFetchRequest<InternalLocation> = InternalLocation.fetchRequest()
         if let results = try? dataController.viewContext.fetch(fetchRequest) {
             locations = results
         }
-        setMap()
-        getUserDefault()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -131,7 +136,7 @@ extension MapViewController: MKMapViewDelegate {
         internalLocation.longitude = coordinate.longitude
         try? dataController.viewContext.save()
         
-        
+        refreshLocations()
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
