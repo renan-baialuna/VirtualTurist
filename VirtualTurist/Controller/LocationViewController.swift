@@ -23,8 +23,8 @@ class LocationViewController: UIViewController {
     var dataController: DataController!
     var internalLocation: InternalLocation!
     var photos: [PhotoStruct] = []
-
-    
+    var photosSelected: [String] = []
+    var hasDataSaved: Bool = true
     
     
     var internalPhotos: [InternalPhoto] = []
@@ -46,6 +46,7 @@ class LocationViewController: UIViewController {
                 self.internalPhotos = result
             } else {
                 getUserLocation(lat: Float(location.coordinate.latitude), log: Float(location.coordinate.longitude))
+                hasDataSaved = false
             }
             
             
@@ -151,6 +152,12 @@ extension LocationViewController: UICollectionViewDelegate, UICollectionViewData
             cell.image.image = image
         }
         
+        if searchPhoto(photos[indexPath.row].id) {
+            cell.backgroundColor = .black
+        } else {
+            cell.backgroundColor = .white
+        }
+        
         return cell
     }
     
@@ -163,12 +170,24 @@ extension LocationViewController: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         var internalPhoto = InternalPhoto(context: dataController.viewContext)
         let cell = photos[indexPath.row]
-        internalPhoto.id = cell.id
-        internalPhoto.image = cell.image?.pngData()
-        internalPhoto.location = internalLocation
-        
-        
-        try? dataController.viewContext.save()
+        if !searchPhoto(cell.id) && !hasDataSaved {
+            internalPhoto.id = cell.id
+            internalPhoto.image = cell.image?.pngData()
+            internalPhoto.location = internalLocation
+            self.photosSelected.append(internalPhoto.id!)
+            
+            try? dataController.viewContext.save()
+            collectionView.reloadData()
+        }
+    }
+    
+    func searchPhoto(_ id: String) -> Bool {
+        for i in photosSelected {
+            if i == id {
+                return true
+            }
+        }
+        return false
     }
     
 }
