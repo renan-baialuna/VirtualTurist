@@ -25,7 +25,10 @@ class LocationViewController: UIViewController {
     var photos: [PhotoStruct] = []
     var photosSelected: [String] = []
     var hasDataSaved: Bool = true
-    
+    var numberofPhotos: Int = 0
+    var numberOfLoadedPhotos: Int = 0
+    var photosLoaded: [PhotoStruct] = []
+    var photosToPresente: [PhotoStruct] = []
     
     var internalPhotos: [InternalPhoto] = []
     var tempImage: UIImage?
@@ -62,6 +65,7 @@ class LocationViewController: UIViewController {
         for i in self.internalPhotos {
             let newPhoto = PhotoStruct(id: i.id!, image: UIImage(data: i.image!))
             self.photos.append(newPhoto)
+            self.photosToPresente = self.photos
         }
         DispatchQueue.main.async {
             self.photosCollection.reloadData()
@@ -73,16 +77,18 @@ class LocationViewController: UIViewController {
             if error == nil {
                 if let response = response {
                     if response.photos.photo.count > 0 {
+                        self.numberofPhotos = response.photos.photo.count
                         for i in response.photos.photo {
                             self.getPhotoSizes(id: i.id)
                         }
                         
                     } else {
+                        self.showAlert()
                         print("no photos")
                     }
                 }
             } else {
-//
+                self.showAlert()
             }
         }
     }
@@ -117,8 +123,9 @@ class LocationViewController: UIViewController {
                 if let safeData = data {
                     if let downloadedImage = UIImage(data: safeData){
 //                        self.tempImage = downloadedImage
+                        self.numberOfLoadedPhotos += 1
                         let newPhoto = PhotoStruct(id: id, image: downloadedImage)
-                        self.photos.append(newPhoto)
+                        self.photosToPresente = self.addNewPhotoToCollection(newPhoto)
                         DispatchQueue.main.async {
                             self.photosCollection.reloadData()
                         }
@@ -129,6 +136,19 @@ class LocationViewController: UIViewController {
             task.resume()
         }
        
+    }
+    
+    func addNewPhotoToCollection(_ newPhoto: PhotoStruct) -> [PhotoStruct] {
+        var ret: [PhotoStruct] = []
+        photosLoaded.append(newPhoto)
+        ret = photosLoaded
+        var totalOfMockPhotos = numberofPhotos - numberOfLoadedPhotos
+        while totalOfMockPhotos > 0 {
+            ret.append(PhotoStruct(id: "0", image: UIImage(named: "photoLoading")))
+            totalOfMockPhotos -= 1
+        }
+        
+        return ret
     }
     
     func setupLocation() {
@@ -142,17 +162,17 @@ class LocationViewController: UIViewController {
 
 extension LocationViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+        return photosToPresente.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCollectionViewCell
         
-        if let image = photos[indexPath.row].image {
+        if let image = photosToPresente[indexPath.row].image {
             cell.image.image = image
         }
         
-        if searchPhoto(photos[indexPath.row].id) {
+        if searchPhoto(photosToPresente[indexPath.row].id) {
             cell.backgroundColor = .black
         } else {
             cell.backgroundColor = .white
@@ -169,7 +189,7 @@ extension LocationViewController: UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         var internalPhoto = InternalPhoto(context: dataController.viewContext)
-        let cell = photos[indexPath.row]
+        let cell = photosToPresente[indexPath.row]
         if !searchPhoto(cell.id) && !hasDataSaved {
             internalPhoto.id = cell.id
             internalPhoto.image = cell.image?.pngData()
@@ -181,6 +201,8 @@ extension LocationViewController: UICollectionViewDelegate, UICollectionViewData
         }
     }
     
+    
+    
     func searchPhoto(_ id: String) -> Bool {
         for i in photosSelected {
             if i == id {
@@ -188,6 +210,16 @@ extension LocationViewController: UICollectionViewDelegate, UICollectionViewData
             }
         }
         return false
+    }
+    
+    func showAlert() {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Error", message: "No Photos found", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { (action) in
+                self.navigationController?.popToRootViewController(animated: true)
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
 }
