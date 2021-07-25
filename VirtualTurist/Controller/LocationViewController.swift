@@ -34,16 +34,14 @@ class LocationViewController: UIViewController {
     var location: MKPointAnnotation!
     var dataController: DataController!
     var internalLocation: InternalLocation!
-//    var photos: [PhotoStruct] = []
     var photosSelected: [String] = []
     var hasDataSaved: Bool = true
     var numberofPhotos: Int = 0
     var numberOfLoadedPhotos: Int = 0
-//    var photosLoaded: [PhotoStruct] = []
     var photosToPresente: [PhotoStruct] = []
-    
     var internalPhotos: [InternalPhoto] = []
     var tempImage: UIImage?
+    var page: Int = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +82,7 @@ class LocationViewController: UIViewController {
     }
     
     func getUserLocation(lat: Float, log: Float) {
-        OTMClient.taskForGetRequest(url: OTMClient.Endpoints.getPhotoListByLocation(lat, log) .url, responseType: PhotoList.self) { (response, error) in
+        OTMClient.taskForGetRequest(url: OTMClient.Endpoints.getPhotoListByLocation(lat, log, page) .url, responseType: PhotoList.self) { (response, error) in
             if error == nil {
                 if let response = response {
                     if response.photos.photo.count > 0 {
@@ -95,10 +93,13 @@ class LocationViewController: UIViewController {
                                 self.getPhotoSizes(id: i.id)
                             }
                         }
-                        
+                        self.page += 1
                     } else {
-                        self.showAlert()
-                        print("no photos")
+                        if self.photosToPresente.count == 0 {
+                            self.showAlert()
+                            print("no photos")
+                        }
+                        
                     }
                 }
             } else {

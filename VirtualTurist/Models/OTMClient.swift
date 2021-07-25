@@ -15,19 +15,17 @@ class OTMClient {
     
     
     enum Endpoints  {
-        case getPhotoListByLocation(Float, Float)
+        case getPhotoListByLocation(Float, Float, Int)
         case getPhotoAllSizes(String)
         
         var stringValue: String {
             switch self {
-            case .getPhotoListByLocation(let lat, let log):
-                return "https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=f9cc014fa76b098f9e82f1c288379ea1&per_page=10&lat=\(lat)&lon=\(log)&format=json&nojsoncallback=1"
+            case .getPhotoListByLocation(let lat, let log, let page):
+                return "https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(Auth.apiKey)&per_page=\(page)0&lat=\(lat)&lon=\(log)&format=json&nojsoncallback=1"
             case .getPhotoAllSizes(let id):
-                return "https://www.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=f9cc014fa76b098f9e82f1c288379ea1&photo_id=\(id)&format=json&nojsoncallback=1"
+                return "https://www.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=\(Auth.apiKey)&photo_id=\(id)&format=json&nojsoncallback=1"
                 
             }
-//            https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=f9cc014fa76b098f9e82f1c288379ea1&lat=-23.493383994940075&lon=-46.64572056038642&per_page=10&format=json&nojsoncallback=1
-                
         }
         var url: URL {
             print(stringValue)
