@@ -31,13 +31,14 @@ class LocationViewController: UIViewController {
 
     @IBOutlet weak var photosCollection: UICollectionView!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var button: UIButton!
     var location: MKPointAnnotation!
     var dataController: DataController!
     var internalLocation: InternalLocation!
     var photosSelected: [String] = []
     var hasDataSaved: Bool = true
-    var numberofPhotos: Int = 0
-    var numberOfLoadedPhotos: Int = 0
+    var numberOfPhotosToLoad: Int = 0
+    var pagesLoadedTotal: Int = 0
     var photosToPresente: [PhotoStruct] = []
     var internalPhotos: [InternalPhoto] = []
     var tempImage: UIImage?
@@ -86,14 +87,16 @@ class LocationViewController: UIViewController {
             if error == nil {
                 if let response = response {
                     if response.photos.photo.count > 0 {
-                        self.numberofPhotos = response.photos.photo.count
+//                        self.numberOfPhotosToLoad = response.photos.photo.count - self.pagesLoadedTotal
+//                        print("total: \(response.photos.photo.count)")
                         for i in response.photos.photo {
                             if !self.searchPhotoEnhanced(i.id).found {
+                                self.numberOfPhotosToLoad += 1
                                 self.addUpdatePhoto(id: i.id)
                                 self.getPhotoSizes(id: i.id)
                             }
                         }
-                        self.page += 1
+//                        self.page += 1
                     } else {
                         if self.photosToPresente.count == 0 {
                             self.showAlert()
@@ -110,6 +113,12 @@ class LocationViewController: UIViewController {
     
     func getPhotoSizes(id: String) {
         OTMClient.taskForGetRequest(url: OTMClient.Endpoints.getPhotoAllSizes(id).url,  responseType: PhotoSizes.self) { [self] (response, error) in
+            self.numberOfPhotosToLoad -= 1
+            self.pagesLoadedTotal += 1
+            DispatchQueue.main.async {
+                print(self.numberOfPhotosToLoad)
+                self.button.isEnabled = self.numberOfPhotosToLoad <= 0
+            }
             if error == nil {
                 if let size = response?.sizes.size {
                     var ret = size[0]
@@ -133,16 +142,15 @@ class LocationViewController: UIViewController {
             let session = URLSession(configuration: .default)
             
             let task = session.dataTask(with: url) { (data: Data?, response: URLResponse?, error: Error?) in
+                
                 if error != nil {
                 }
                 if let safeData = data {
-                    if let downloadedImage = UIImage(data: safeData){
-                        self.numberOfLoadedPhotos += 1
+                    if let downloadedImage = UIImage(data: safeData) {
                         self.addUpdatePhoto(id: id, image: downloadedImage)
                         DispatchQueue.main.async {
                             self.photosCollection.reloadData()
                         }
-                        
                     }
                 }
             }
@@ -163,7 +171,23 @@ class LocationViewController: UIViewController {
 
     
     @IBAction func starNewCollection() {
+//        getUserLocation(lat: Float(location.coordinate.latitude), log: Float(location.coordinate.longitude))
+        
+        let fetchRequest: NSFetchRequest<InternalPhoto> = InternalPhoto.fetchRequest()
+        let predicate  = NSPredicate(format: "location == %@", internalLocation)
+        fetchRequest.predicate = predicate
+        
+        if let result = try? dataController.viewContext.fetch(fetchRequest) {
+            for i in result {
+                dataController.viewContext.delete(i)
+            }
+            try? dataController.viewContext.save()
+        }
+        photosToPresente = []
         getUserLocation(lat: Float(location.coordinate.latitude), log: Float(location.coordinate.longitude))
+        photosCollection.reloadData()
+        
+        
     }
     
     
@@ -243,6 +267,8 @@ extension LocationViewController: UICollectionViewDelegate, UICollectionViewData
                 }
                 try? dataController.viewContext.save()
             }
+//            collectionView.deleteItems(at: [indexPath])
+            photosToPresente.remove(at: indexPath.row)
             
         } else {
             selectedPhoto.isSelected = true

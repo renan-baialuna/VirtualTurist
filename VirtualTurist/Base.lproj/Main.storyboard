@@ -114,6 +114,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="6l2-It-kOX"/>
                     <connections>
+                        <outlet property="button" destination="ITt-dj-x4B" id="FgQ-Nc-E7b"/>
                         <outlet property="mapView" destination="2wH-4O-mpG" id="gMX-Pp-gxC"/>
                         <outlet property="photosCollection" destination="KBy-5y-lAA" id="4LN-Le-cfd"/>
                     </connections>
