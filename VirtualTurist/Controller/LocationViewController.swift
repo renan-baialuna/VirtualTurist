@@ -232,6 +232,17 @@ extension LocationViewController: UICollectionViewDelegate, UICollectionViewData
         if selectedPhoto.isSelected {
             selectedPhoto.isSelected = false
             
+            let fetchRequest: NSFetchRequest<InternalPhoto> = InternalPhoto.fetchRequest()
+            let predicate  = NSPredicate(format: "id == %@", selectedPhoto.id)
+            fetchRequest.predicate = predicate
+            
+            if let result = try? dataController.viewContext.fetch(fetchRequest) {
+                for i in result {
+                    dataController.viewContext.delete(i)
+                }
+                try? dataController.viewContext.save()
+            }
+            
         } else {
             selectedPhoto.isSelected = true
             var internalPhoto = InternalPhoto(context: dataController.viewContext)
