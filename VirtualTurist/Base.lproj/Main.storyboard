@@ -91,7 +91,10 @@
                                     <constraint firstAttribute="height" constant="85" id="BjO-sq-Pxd"/>
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="New Collection"/>
+                                <connections>
+                                    <action selector="starNewCollection" destination="SCn-EE-5tQ" eventType="touchUpInside" id="okx-nA-Rc6"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="VrJ-vW-RNf"/>
