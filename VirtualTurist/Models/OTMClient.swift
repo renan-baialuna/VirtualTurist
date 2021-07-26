@@ -10,7 +10,7 @@ import Foundation
 class OTMClient {
     
     struct Auth {
-        static var apiKey: String = "f9cc014fa76b098f9e82f1c288379ea1"
+        static var apiKey: String = "8a359454596806b82de4db34e515d9b9"
     }
     
     

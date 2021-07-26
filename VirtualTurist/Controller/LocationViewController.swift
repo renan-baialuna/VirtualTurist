@@ -87,8 +87,6 @@ class LocationViewController: UIViewController {
             if error == nil {
                 if let response = response {
                     if response.photos.photo.count > 0 {
-//                        self.numberOfPhotosToLoad = response.photos.photo.count - self.pagesLoadedTotal
-//                        print("total: \(response.photos.photo.count)")
                         for i in response.photos.photo {
                             if !self.searchPhotoEnhanced(i.id).found {
                                 self.numberOfPhotosToLoad += 1
@@ -96,7 +94,6 @@ class LocationViewController: UIViewController {
                                 self.getPhotoSizes(id: i.id)
                             }
                         }
-//                        self.page += 1
                     } else {
                         if self.photosToPresente.count == 0 {
                             self.showAlert()
@@ -171,8 +168,6 @@ class LocationViewController: UIViewController {
 
     
     @IBAction func starNewCollection() {
-//        getUserLocation(lat: Float(location.coordinate.latitude), log: Float(location.coordinate.longitude))
-        
         let fetchRequest: NSFetchRequest<InternalPhoto> = InternalPhoto.fetchRequest()
         let predicate  = NSPredicate(format: "location == %@", internalLocation)
         fetchRequest.predicate = predicate
@@ -267,7 +262,6 @@ extension LocationViewController: UICollectionViewDelegate, UICollectionViewData
                 }
                 try? dataController.viewContext.save()
             }
-//            collectionView.deleteItems(at: [indexPath])
             photosToPresente.remove(at: indexPath.row)
             
         } else {
