@@ -67,14 +67,12 @@ class MapViewController: UIViewController {
         var span = MKCoordinateSpan()
         
         if let latSpan = UserDefaults.standard.value(forKey: spanLatKey) {
-//            mapView.region.span.latitudeDelta = latSpan as! CLLocationDegrees
             span.latitudeDelta = latSpan as! CLLocationDegrees
         } else {
             UserDefaults.standard.setValue(mapView.region.span.latitudeDelta, forKey: spanLatKey)
         }
         
         if let lonSpan = UserDefaults.standard.value(forKey: spanLogKey) {
-//            mapView.region.span.longitudeDelta = lonSpan as! CLLocationDegrees
             span.longitudeDelta = lonSpan as! CLLocationDegrees
         } else {
             UserDefaults.standard.setValue(mapView.region.span.longitudeDelta, forKey: spanLogKey)
@@ -106,11 +104,12 @@ class MapViewController: UIViewController {
     }
     
     func setMap() {
+        var annotations: [MKPointAnnotation] = []
         let gestureRecognizer = UITapGestureRecognizer(target: self, action:"handleTap:")
+
         gestureRecognizer.delegate = self
         mapView.addGestureRecognizer(gestureRecognizer)
         
-        var annotations: [MKPointAnnotation] = []
         for i in locations {
             let anotation = convertLocation(location: i)
             annotations.append(anotation)
