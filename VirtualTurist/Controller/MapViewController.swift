@@ -26,6 +26,8 @@ class MapViewController: UIViewController {
     let spanLatKey = "spanLat"
     let spanLogKey = "spanLog"
     
+    let initialLatitude: Double = -23.54514558866593
+    let initialLongitude: Double = -46.633638879720536
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,8 +65,8 @@ class MapViewController: UIViewController {
     }
     
     func getUserDefault() {
-        var loc = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
-        var span = MKCoordinateSpan()
+        var loc = CLLocationCoordinate2D(latitude: initialLatitude, longitude: initialLongitude)
+        var span = MKCoordinateSpan(latitudeDelta: 50, longitudeDelta: 50)
         
         if let latSpan = UserDefaults.standard.value(forKey: spanLatKey) {
             span.latitudeDelta = latSpan as! CLLocationDegrees
@@ -95,8 +97,8 @@ class MapViewController: UIViewController {
     
     func convertLocation(location: InternalLocation) -> MKPointAnnotation {
         let annotation = MKPointAnnotation()
-        let lat = location.latitude
-        let long = location.longitude
+        let lat = location.latitude as! Double
+        let long = location.longitude as! Double
         let coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(long))
         
         annotation.coordinate = coordinate
