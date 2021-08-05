@@ -21,7 +21,7 @@ class OTMClient {
         var stringValue: String {
             switch self {
             case .getPhotoListByLocation(let lat, let log, let page):
-                return "https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(Auth.apiKey)&per_page=\(page)0&lat=\(lat)&lon=\(log)&format=json&nojsoncallback=1"
+                return "https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(Auth.apiKey)&per_page=10&page=\(page)&lat=\(lat)&lon=\(log)&format=json&nojsoncallback=1"
             case .getPhotoAllSizes(let id):
                 return "https://www.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=\(Auth.apiKey)&photo_id=\(id)&format=json&nojsoncallback=1"
                 
@@ -32,12 +32,6 @@ class OTMClient {
             return URL(string: stringValue)!
         }
     }
-    
-    
-    
-    
-    
-    
     
     
     @discardableResult class func taskForGetRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, completion: @escaping(ResponseType?, Error?) -> Void) -> URLSessionTask {

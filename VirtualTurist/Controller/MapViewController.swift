@@ -107,7 +107,7 @@ class MapViewController: UIViewController {
     
     func setMap() {
         var annotations: [MKPointAnnotation] = []
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action:"handleTap:")
+        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action:"handleTap:")
 
         gestureRecognizer.delegate = self
         mapView.addGestureRecognizer(gestureRecognizer)

@@ -43,6 +43,7 @@ class LocationViewController: UIViewController {
     var internalPhotos: [InternalPhoto] = []
     var tempImage: UIImage?
     var page: Int = 1
+    var totalPages: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,9 +84,15 @@ class LocationViewController: UIViewController {
     }
     
     func getUserLocation(lat: Float, log: Float) {
-        OTMClient.taskForGetRequest(url: OTMClient.Endpoints.getPhotoListByLocation(lat, log, page) .url, responseType: PhotoList.self) { (response, error) in
+        if totalPages > 0 {
+            self.page = Int.random(in: 1...totalPages)
+        } else {
+            self.page = 1
+        }
+        OTMClient.taskForGetRequest(url: OTMClient.Endpoints.getPhotoListByLocation(lat, log, self.page) .url, responseType: PhotoList.self) { (response, error) in
             if error == nil {
                 if let response = response {
+                    self.totalPages = response.photos.pages
                     if response.photos.photo.count > 0 {
                         for i in response.photos.photo {
                             if !self.searchPhotoEnhanced(i.id).found {
@@ -113,7 +120,6 @@ class LocationViewController: UIViewController {
             self.numberOfPhotosToLoad -= 1
             self.pagesLoadedTotal += 1
             DispatchQueue.main.async {
-                print(self.numberOfPhotosToLoad)
                 self.button.isEnabled = self.numberOfPhotosToLoad <= 0
             }
             if error == nil {
