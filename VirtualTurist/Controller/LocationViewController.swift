@@ -91,7 +91,6 @@ class LocationViewController: UIViewController {
     func getUserLocation(lat: Float, log: Float) {
         if totalPages > 0 {
             self.page = getRandomPage()
-            print(self.page)
         } else {
             self.page = 1
         }
