@@ -83,9 +83,15 @@ class LocationViewController: UIViewController {
         }
     }
     
+    func getRandomPage() -> Int {
+        var totalPossiblePages = 400
+        return min(totalPossiblePages, Int.random(in: 1...totalPages))
+    }
+    
     func getUserLocation(lat: Float, log: Float) {
         if totalPages > 0 {
-            self.page = Int.random(in: 1...totalPages)
+            self.page = getRandomPage()
+            print(self.page)
         } else {
             self.page = 1
         }

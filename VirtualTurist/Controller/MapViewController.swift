@@ -123,21 +123,24 @@ class MapViewController: UIViewController {
 
 extension MapViewController: MKMapViewDelegate {
     @objc func handleTap(_ gestureReconizer: UILongPressGestureRecognizer){
-
         let location = gestureReconizer.location(in: mapView)
         let coordinate = mapView.convert(location,toCoordinateFrom: mapView)
 
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = coordinate
-        mapView.addAnnotation(annotation)
+        if gestureReconizer.state == .began {
+            print(gestureReconizer.state.rawValue)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            mapView.addAnnotation(annotation)
+        }
         
-//        save location
-        var internalLocation = InternalLocation(context: dataController.viewContext)
-        internalLocation.latitude = coordinate.latitude
-        internalLocation.longitude = coordinate.longitude
-        try? dataController.viewContext.save()
-        
-        refreshLocations()
+        if gestureReconizer.state == .ended {
+            var internalLocation = InternalLocation(context: dataController.viewContext)
+            internalLocation.latitude = coordinate.latitude
+            internalLocation.longitude = coordinate.longitude
+            try? dataController.viewContext.save()
+            
+            refreshLocations()
+        }
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
